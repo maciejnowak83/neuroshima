@@ -15,7 +15,7 @@ function initMap() {
   const znajdz_mnie = {lat:50.4824, lng: 17.3298};
   
   // The map, centered at Uluru
-  var map = new google.maps.Map(document.getElementById("map"), {
+  map = new google.maps.Map(document.getElementById("map"), {
     zoom: 20,
     center: nysa,
 	disableDefaultUI: true //wyłączamy domyślny interfejs
@@ -91,25 +91,32 @@ function initMap() {
   const btnZnajdzMnie = document.createElement("button");
   const locationButtonDiv = document.createElement("div");
   const fullscreenButtonDiv = document.createElement("div");
+  const nstaskbar = document.querySelector("#nstaskbar");
   
+  //dodajemy przycisk locationButton
   CenterControl(locationButtonDiv, map);
   map.controls[google.maps.ControlPosition.TOP_CENTER].push(locationButtonDiv);
 
   
+  //dodajemy przycisk fullscreen
   initFullscreenControl(fullscreenButtonDiv,map);
-   map.controls[google.maps.ControlPosition.TOP_RIGHT].push(fullscreenButtonDiv);
+  map.controls[google.maps.ControlPosition.TOP_RIGHT].push(fullscreenButtonDiv);
    
+  //dodajemy nstaskbar
+  map.controls[google.maps.ControlPosition.BOTTOM_LEFT].push(nstaskbar);
+  nstaskbar.style.display="block";
+
   
-  
+
   locationButton.textContent = "Moja lokalizacja";
   //locationButton.classList.add("custom-map-control-button");
   locationButton.classList.add("find-me");
-  map.controls[google.maps.ControlPosition.TOP_LEFT].push(locationButton);
+  //map.controls[google.maps.ControlPosition.TOP_LEFT].push(locationButton);
 
 
   btnZnajdzMnie.textContent = "ZnajdzMnie";
   btnZnajdzMnie.classList.add("custom-map-control-button");
-  map.controls[google.maps.ControlPosition.TOP_LEFT].push(btnZnajdzMnie);
+  //map.controls[google.maps.ControlPosition.TOP_LEFT].push(btnZnajdzMnie);
   
 
   
@@ -276,6 +283,7 @@ function find_closest_marker2(event) {
     }
 
 
+//funkcja co sekunde przemieszcza marker
  setInterval(function() {
 
   
@@ -297,6 +305,35 @@ function find_closest_marker2(event) {
 }, 1000);
 
 
+//funkcja co 2 sekundy dodane 
+setInterval(function() {
+
+  
+ //const node = document.createElement("p");
+ //const textnode = document.createTextNode("Water");
+ //node.appendChild(textnode);
+  
+
+   const nstaskbar = document.querySelector("#nstaskbar");
+
+   let rnd = Math.random()*100;
+         nstaskbar.innerHTML="<p style='color:yellow;'>"+rnd+"</p>";
+
+  //nstaskbar.appendChild(node);
+    
+
+},2000)
+
+
+
+
+
+//odświerz moją pozycję (dodaj marker nowy za każdym razem)
+setInterval(function(){
+
+  refreshMyMarkerPosition();
+
+},10000)
 
 
 
@@ -410,6 +447,48 @@ function exitFullscreen() {
 
 
 
+function refreshMyMarkerPosition()
+{
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const pos = {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude,
+        };
+
+  //  alert(pos.lat + ' ' + pos.lng);
+
+      //infoWindow.setPosition(pos);
+     //  infoWindow.setContent("Location found.");
+      //  infoWindow.open(map);
+  
+       map.setCenter(pos);
+   
+   
+   //i dodaj marker
+    const tutaj_jestem = new google.maps.Marker({
+      position: pos,
+      map: map,
+      title: "Hej tutaj jestem",
+      label: "Hej tutaj jestem"
+    });
+
+    
+      },
+      () => {
+        handleLocationError(true, infoWindow, map.getCenter());
+      }
+    );
+  } else {
+    // Browser doesn't support Geolocation
+    handleLocationError(false, infoWindow, map.getCenter());
+  
+  }
+}
+
+
+
 
 
 
@@ -444,7 +523,6 @@ function CenterControl(controlDiv, map) {
     // Try HTML5 geolocation.
 	
 
-	
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
@@ -485,7 +563,7 @@ function CenterControl(controlDiv, map) {
     }
   });
   
-  
+
   
 }
 
