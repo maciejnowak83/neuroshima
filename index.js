@@ -5,6 +5,26 @@ var marker;
 var m = 0;
 
 let map;
+
+
+import {createOponents} from './oponents.js';
+
+
+document.getElementById ("runNeuro").addEventListener ("click", runNeuroshima, false);
+
+
+function runNeuroshima() {
+	//window.initMap = initMap;
+	
+	initMap(); //uruchom silnik mapy
+	createOponents(map);
+	makeMapFullScreen(); //ustaw mapę na pełny ekran
+		
+	
+}
+
+
+
 // Initialize and add the map
 function initMap() {
   // The location of nysa
@@ -23,9 +43,10 @@ function initMap() {
   
   
   
+
   // initFullscreenControl(map);
 
-  
+
   /*
   numberMarkerImg = {
         url: "https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png",
@@ -139,7 +160,8 @@ function initMap() {
        //  infoWindow.setContent("Location found.");
         //  infoWindow.open(map);
 		
-         map.setCenter(pos);
+		
+        // map.setCenter(pos);  //ustaw mapę na mojej pozycji
 		 
 		 
 		 //i dodaj marker
@@ -180,16 +202,9 @@ function initMap() {
    
 	});
   
-  
-  
-  
-  
+        
     google.maps.event.addListener(map, 'click', find_closest_marker2);
-  
-  
-  
-  
-
+    
    
 }
 
@@ -338,6 +353,22 @@ setInterval(function(){
 
 
 
+  function makeMapFullScreen()
+  {
+	  //funkcja która ustawia mapę na full screen
+	const elementToSendFullscreen = document.getElementById("map");
+	   
+	  
+	   if (isFullscreen(elementToSendFullscreen)) {
+      exitFullscreen();
+    } else {
+      requestFullscreen(elementToSendFullscreen);
+    }
+	
+	
+  }
+
+
 
 
 
@@ -379,16 +410,18 @@ function initFullscreenControl(controlDiv,map) {
   fullscreenControl.appendChild(controlText);
   
     
-    
+ 
 
   map.controls[google.maps.ControlPosition.RIGHT_TOP].push(fullscreenControl);
   
   fullscreenControl.onclick = function () {
+	  
     if (isFullscreen(elementToSendFullscreen)) {
       exitFullscreen();
     } else {
       requestFullscreen(elementToSendFullscreen);
     }
+	
   };
 
   document.onwebkitfullscreenchange =
@@ -463,7 +496,7 @@ function refreshMyMarkerPosition()
      //  infoWindow.setContent("Location found.");
       //  infoWindow.open(map);
   
-       map.setCenter(pos);
+    //   map.setCenter(pos); ustaw mapę w pozycji
    
    
    //i dodaj marker
@@ -569,5 +602,3 @@ function CenterControl(controlDiv, map) {
 
 
 
-
-window.initMap = initMap;
