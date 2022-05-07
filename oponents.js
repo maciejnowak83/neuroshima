@@ -1,7 +1,7 @@
-let oponents = []; //obiekty losowo wygenerowane jako przeciwnicy i przeszkody w neuroshimie
+//let oponents = []; //obiekty losowo wygenerowane jako przeciwnicy i przeszkody w neuroshimie
 
 
-function createOponents(map) {
+function createOponents(map,oponents) {
 	
 	
   const image = {
@@ -19,10 +19,10 @@ function createOponents(map) {
 	
 	
 	
-	//losuj markery oponentów (ich pozycjê)
+	//losuj markery oponentï¿½w (ich pozycjï¿½)
 	for (let i = 0; i < 10; i++) {
 		
-		  var oponent_position = { lat: 50.4823+(Math.random()/100), lng: 17.3296+(Math.random()/100) };
+		  var oponent_position = { lat: 50.4823+(Math.random()/100), lng: 17.3296+(Math.random()/100) }; //wokÃ³Å‚ nysy
           var oponent;	
 		  //var nysa = { lat: 50.4823+(Math.random()/100), lng: 17.3296+(Math.random()/100) };
 		  
@@ -36,10 +36,117 @@ function createOponents(map) {
 
 			  });
 			  
-			  oponents.push(oponent); //dodajemy oponentów do zbioru  
+			  oponents.push(oponent); //dodajemy oponentï¿½w do zbioru  
 			  
 	
 	} 
+
+
+
+
+
+
+
+
+	//losuj markery oponentï¿½w (ich pozycjï¿½)
+	for (let j = 0; j < 10; j++) {
+		
+		var oponent_position = { lat: 50.4823-(Math.random()/100), lng: 17.3296-(Math.random()/100) };
+		var oponent;	
+		//var nysa = { lat: 50.4823+(Math.random()/100), lng: 17.3296+(Math.random()/100) };
+		
+		oponent = new google.maps.Marker({
+			  position: oponent_position,
+			  map: map,
+			  icon: image,
+			  title: "Oponent"+j,
+			  label: "Oponent"+j, 
+			  visible: true
+
+			});
+			
+			oponents.push(oponent); //dodajemy oponentï¿½w do zbioru  
+			
+  
+  } 
+
+
+
+
+
+
+
+
+
+
+	//losuj markery oponentï¿½w (ich pozycjï¿½)
+	for (let k = 0; k < 10; k++) {
+		
+		var oponent_position = { lat: 50.4823+(Math.random()/200), lng: 17.3296-(Math.random()/200) };
+		var oponent;	
+		//var nysa = { lat: 50.4823+(Math.random()/100), lng: 17.3296+(Math.random()/100) };
+		
+		oponent = new google.maps.Marker({
+			  position: oponent_position,
+			  map: map,
+			  icon: image,
+			  title: "Oponent"+k,
+			  label: "Oponent"+k, 
+			  visible: true
+
+			});
+			
+			oponents.push(oponent); //dodajemy oponentï¿½w do zbioru  
+			
+  
+  } 
+
+
+
+
+
+
+
+
+
+
+
+
+	//losuj markery oponentï¿½w (ich pozycjï¿½)
+	for (let l = 0; l < 10; l++) {
+		
+		var oponent_position = { lat: 50.4823-(Math.random()/200), lng: 17.3296+(Math.random()/200) };
+		var oponent;	
+		//var nysa = { lat: 50.4823+(Math.random()/100), lng: 17.3296+(Math.random()/100) };
+		
+		oponent = new google.maps.Marker({
+			  position: oponent_position,
+			  map: map,
+			  icon: image,
+			  title: "Oponent"+l,
+			  label: "Oponent"+l, 
+			  visible: true
+
+			});
+			
+			oponents.push(oponent); //dodajemy oponentï¿½w do zbioru  
+			
+  
+  } 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	
 	
 }

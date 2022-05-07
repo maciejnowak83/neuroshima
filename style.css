@@ -29,9 +29,12 @@ body {
 div#nstaskbar 
 {
   background-color:darkorange;
-  opacity: 50%;
+  opacity: 55%;
   width: 100%;
-  height: 10%;
+  height: 20%;
+  border-top-left-radius: 10px;
+  text-indent: 10px;
+  
 }
 
 

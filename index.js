@@ -6,6 +6,12 @@ var m = 0;
 
 let map;
 
+let player1;
+
+let nstaskbar;
+
+let oponents = [];
+
 
 import {createOponents} from './oponents.js';
 
@@ -17,7 +23,7 @@ function runNeuroshima() {
 	//window.initMap = initMap;
 	
 	initMap(); //uruchom silnik mapy
-	createOponents(map);
+	createOponents(map,oponents);
 	makeMapFullScreen(); //ustaw mapę na pełny ekran
 		
 	
@@ -34,10 +40,41 @@ function initMap() {
   // The location of stara jamka
   const znajdz_mnie = {lat:50.4824, lng: 17.3298};
   
-  // The map, centered at Uluru
+  // The map, centered at nysa
+  //https://developers.google.com/maps/documentation/javascript/examples/style-array ostylowanie mapy (np nigt mode)
   map = new google.maps.Map(document.getElementById("map"), {
     zoom: 20,
     center: nysa,
+    styles: [  { elementType: "geometry", stylers: [{ color: "#242f3e" }] },
+    { elementType: "labels.text.stroke", stylers: [{ color: "#242f3e" }] },
+    { elementType: "labels.text.fill", stylers: [{ color: "#746855" }] },
+    {
+      featureType: "administrative.locality",
+      elementType: "labels.text.fill",
+      stylers: [{ color: "#d59563" }],
+    }, 
+    {
+      featureType: "poi",
+      elementType: "labels.text.fill",
+      stylers: [{ color: "#d59563" }],
+    },
+    {
+      featureType: "poi.park",
+      elementType: "geometry",
+      stylers: [{ color: "#263c3f" }],
+    },
+    {
+      featureType: "poi.park",
+      elementType: "labels.text.fill",
+      stylers: [{ color: "#6b9a76" }],
+    },
+    {
+      featureType: "road",
+      elementType: "geometry",
+      stylers: [{ color: "#38414e" }],
+    }
+
+  ],
 	disableDefaultUI: true //wyłączamy domyślny interfejs
   });
   
@@ -101,6 +138,16 @@ function initMap() {
     radius: '5000',
     query: 'Neuroshima test'
   };
+
+
+
+   player1 = new google.maps.Marker({
+    position: nysa,
+    map: map,
+    title: "Player1",
+    label: "Player1"
+  });
+
   
   
   //add every marker to array
@@ -112,7 +159,7 @@ function initMap() {
   const btnZnajdzMnie = document.createElement("button");
   const locationButtonDiv = document.createElement("div");
   const fullscreenButtonDiv = document.createElement("div");
-  const nstaskbar = document.querySelector("#nstaskbar");
+        nstaskbar = document.querySelector("#nstaskbar");
   
   //dodajemy przycisk locationButton
   CenterControl(locationButtonDiv, map);
@@ -165,14 +212,15 @@ function initMap() {
 		 
 		 
 		 //i dodaj marker
-		  const tutaj_jestem = new google.maps.Marker({
+     /*
+		  player1 = new google.maps.Marker({
 				position: pos,
 				map: map,
 				title: "Hej tutaj jestem",
 				label: "Hej tutaj jestem"
 	    });
   
-		  
+		  */
 		  
 		  
         },
@@ -332,7 +380,7 @@ setInterval(function() {
    const nstaskbar = document.querySelector("#nstaskbar");
 
    let rnd = Math.random()*100;
-         nstaskbar.innerHTML="<p style='color:yellow;'>"+rnd+"</p>";
+     //    nstaskbar.innerHTML="<p style='color:yellow;'>"+rnd+"</p>";
 
   //nstaskbar.appendChild(node);
     
@@ -480,6 +528,47 @@ function exitFullscreen() {
 
 
 
+
+
+function find_closest_oponent(myLatLng) {
+  var distances = [];
+  var closest = -1;
+var i=0;
+  for (i = 0; i < oponents.length; i++) {
+
+    var d = google.maps.geometry.spherical.computeDistanceBetween(oponents[i].position,myLatLng); //oblicza odleglosc w metrach pomiędzy player1 a oponentem
+
+    distances[i] = d;
+    if (closest == -1 || d < distances[closest]) {
+      closest = i;
+    }
+    
+
+    if (distances[closest] <= 50) { //czy obiekt jest w odleglosci 50 metrów lub mniejszej ?
+
+     nstaskbar.innerHTML="napotkałem: " + oponents[closest].getTitle() + " w odległości" + distances[closest];
+     // alert('Closest marker is: ' + oponents[closest].getTitle() + ' distance: ' + distances[closest]);
+   }else
+   {
+      nstaskbar.innerHTML="czysto";
+   }
+
+
+  }
+
+
+
+
+ // alert('Closest marker is: ' + markers[closest].getTitle() + ' distance: ' + distances[closest]);
+
+}
+
+
+
+
+
+
+
 function refreshMyMarkerPosition()
 {
   if (navigator.geolocation) {
@@ -490,23 +579,14 @@ function refreshMyMarkerPosition()
           lng: position.coords.longitude,
         };
 
-  //  alert(pos.lat + ' ' + pos.lng);
+     //aktualizuje pozycje gracza1
+     player1.setPosition( new google.maps.LatLng(position.coords.latitude,position.coords.longitude) );
 
-      //infoWindow.setPosition(pos);
-     //  infoWindow.setContent("Location found.");
-      //  infoWindow.open(map);
-  
-    //   map.setCenter(pos); ustaw mapę w pozycji
-   
-   
-   //i dodaj marker
-    const tutaj_jestem = new google.maps.Marker({
-      position: pos,
-      map: map,
-      title: "Hej tutaj jestem",
-      label: "Hej tutaj jestem"
-    });
+    //ustawia mapę na pozycji gracza
+    map.setCenter(pos);  //ustaw mapę na mojej pozycji
 
+     //sprawdza czy w zadanej odleglosci widzimy jakiegos oponenta
+     find_closest_oponent(pos)
     
       },
       () => {
