@@ -19,6 +19,19 @@ import {createOponents} from './oponents.js';
 document.getElementById ("runNeuro").addEventListener ("click", runNeuroshima, false);
 
 
+//uruchamiamy pwa
+window.onload = () => {
+  'use strict';
+
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker
+             .register('./sw.js');
+  }
+}
+
+
+
+
 function runNeuroshima() {
 	//window.initMap = initMap;
 	
