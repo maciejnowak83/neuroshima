@@ -1,5 +1,6 @@
 import { go } from './index.js'
 import { setGo } from './index.js'
+import { neuroshima_sprzet } from './neuroshima_objects.js'
 
 function addEventDiv()
 {
@@ -35,7 +36,21 @@ function resolveOrNot()
 
    console.log("go status changed: " + go);
 
+   jsonTest();
+
 }
+
+
+function jsonTest()
+{
+    //https://www.w3schools.com/js/js_json_objects.asp
+   
+
+   console.log("nobject: " + neuroshima_sprzet[0].rodzaj);
+
+}
+
+
 
 //document.getElementById ("runNeuro").addEventListener ("click", runNeuroshima, false);
 
