@@ -12,9 +12,14 @@ let nstaskbar;
 
 let oponents = [];
 
+let go = true; //status decyzji, jezeli na false czekamy na decyzje, jezeli true, gra się toczy
+
 
 import {createOponents} from './oponents.js';
+import {addEventDiv} from './ui.js';
 
+export {go};
+export {setGo};
 
 document.getElementById ("runNeuro").addEventListener ("click", runNeuroshima, false);
 
@@ -30,8 +35,6 @@ window.onload = () => {
 }
 
 
-
-
 function runNeuroshima() {
 	//window.initMap = initMap;
 	
@@ -40,6 +43,11 @@ function runNeuroshima() {
 	makeMapFullScreen(); //ustaw mapę na pełny ekran
 		
 	
+}
+
+function setGo(state)
+{
+   go=state;
 }
 
 
@@ -560,10 +568,23 @@ var i=0;
     if (distances[closest] <= 50) { //czy obiekt jest w odleglosci 50 metrów lub mniejszej ?
 
      nstaskbar.innerHTML="napotkałem: " + oponents[closest].getTitle() + " w odległości" + distances[closest];
+
+     //dodaj event div ze sliderem
+
+
+
      // alert('Closest marker is: ' + oponents[closest].getTitle() + ' distance: ' + distances[closest]);
    }else
    {
-      nstaskbar.innerHTML="czysto";
+
+      if (go===true)
+      {
+        nstaskbar.innerHTML="czysto";
+        addEventDiv(); //testowo dodaję event diva ze sliderem
+      }
+
+
+
    }
 
 

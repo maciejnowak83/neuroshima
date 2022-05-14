@@ -6,17 +6,19 @@
 
     <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
 	
-  	<script type="module" src="./oponents.js"></script>
     <script type="module" src="./index.js"></script>
+  	<script type="module" src="./oponents.js"></script>
     <script type="module" src="./ui.js"></script>
-  
+ 
+
 
     <link rel="manifest" href="/manifest.json">
     <link rel="icon" href="favicon.ico" type="image/x-icon" />
    	<link rel="stylesheet" type="text/css" href="./style.css" />
+    <link rel="stylesheet" type="text/css" href="./ui.css" />
 
      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     <meta name="theme-color" content="white"/>
+     <meta name="theme-color" content="black"/>
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="apple-mobile-web-app-title" content="Neuroshima">
@@ -25,17 +27,41 @@
 
   </head>
   <body>
+
+    <div id="startneuroshima">
     <h3>Neuroshima</h3>
-	
-	
-	<button id="runNeuro">Run Neuroshima</button>
+    <br>
+  	<button id="runNeuro">Run Neuroshima</button>
+    </div>
 	
     <!--The div element for the map -->
     <div id="map"></div>
 
-	
-	<div id="nstaskbar" style="display: none;">nstaskbar test</div>
-	
+	  <!--Taskbar in map, main game info and events-->
+	 <div id="nstaskbar" style="display: none;"></div>
+
+
+   <!-- Rounded switch -->
+   <label class="switch">
+    <input type="checkbox">
+    <span class="slider"></span>
+  </label>
+  
+  <label class="switch">
+    <input type="checkbox" checked>
+    <span class="slider"></span>
+  </label><br><br>
+  
+  <label class="switch">
+    <input type="checkbox">
+    <span class="slider round"></span>
+  </label>
+  
+  <label class="switch">
+    <input type="checkbox" checked>
+    <span class="slider round"></span>
+  </label>
+    	
 	
 	    <!-- Hide controls until they are moved into the map. -->
     <div style="display: none">
@@ -94,6 +120,6 @@
       defer
     ></script>
 
-    <script src="js/main.js"></script>
+
   </body>
 </html>
