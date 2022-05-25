@@ -1,0 +1,54 @@
+<html>
+  <head>
+    <title>Test</title>
+
+
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <meta name="theme-color" content="black"/>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Neuroshima">
+    <meta name="msapplication-TileColor" content="#000000">
+
+  </head>
+  <body>
+<script type="text/javascript">
+ console.log('start test');
+
+ let neuroshima_sprzet = {
+   alkohol_sam_litr : {rodzaj: 'uzywki'},
+   alkohol_mar_litr : {rodzaj: 'uzywki'},
+   papieros_sztuka : {rodzaj:'uzywki'},
+   tyton_do_zucia_porcja : {rodzaj:'uzywki'}
+
+ };
+
+  
+  console.log(neuroshima_sprzet.alkohol_mar_litr.rodzaj);
+ 
+
+  Object.keys(neuroshima_sprzet).forEach(function(k) {
+
+    var losowa = getRandomInt(11);
+    console.log(k + " " + losowa);
+    //przechodzimy przez cały sprzet i losujemy z kazdego z nich odpowiednią liczbę
+    
+
+
+  })
+
+
+
+    function getRandomInt(max) {
+      return Math.floor(Math.random() * max);
+    }
+
+
+ console.log('koniec test');
+
+
+
+  </script>
+ 
+  </body>
+</html>

@@ -20,7 +20,7 @@ function createOponents(map,oponents) {
 	
 	
 	//losuj markery oponent�w (ich pozycj�)
-	for (let i = 0; i < 10; i++) {
+	for (let i = 0; i < 5; i++) {
 		
 		  var oponent_position = { lat: 50.4823+(Math.random()/100), lng: 17.3296+(Math.random()/100) }; //wokół nysy
           var oponent;	
@@ -49,6 +49,7 @@ function createOponents(map,oponents) {
 
 
 	//losuj markery oponent�w (ich pozycj�)
+	/*
 	for (let j = 0; j < 10; j++) {
 		
 		var oponent_position = { lat: 50.4823-(Math.random()/100), lng: 17.3296-(Math.random()/100) };
@@ -69,7 +70,7 @@ function createOponents(map,oponents) {
 			
   
   } 
-
+*/
 
 
 
@@ -80,6 +81,7 @@ function createOponents(map,oponents) {
 
 
 	//losuj markery oponent�w (ich pozycj�)
+	/*
 	for (let k = 0; k < 10; k++) {
 		
 		var oponent_position = { lat: 50.4823+(Math.random()/200), lng: 17.3296-(Math.random()/200) };
@@ -100,7 +102,7 @@ function createOponents(map,oponents) {
 			
   
   } 
-
+*/
 
 
 
@@ -113,6 +115,7 @@ function createOponents(map,oponents) {
 
 
 	//losuj markery oponent�w (ich pozycj�)
+	/*
 	for (let l = 0; l < 10; l++) {
 		
 		var oponent_position = { lat: 50.4823-(Math.random()/200), lng: 17.3296+(Math.random()/200) };
@@ -134,7 +137,7 @@ function createOponents(map,oponents) {
   
   } 
 
-
+*/
 
 
 

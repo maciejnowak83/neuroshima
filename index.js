@@ -12,10 +12,13 @@ let nstaskbar;
 
 let oponents = [];
 
+let sprzety = []; //ksiazka strona 136
+
 let go = true; //status decyzji, jezeli na false czekamy na decyzje, jezeli true, gra się toczy
 
 
 import {createOponents} from './oponents.js';
+import {createSprzet} from './sprzet.js';
 import {addEventDiv} from './ui.js';
 
 export {go};
@@ -39,7 +42,12 @@ function runNeuroshima() {
 	//window.initMap = initMap;
 	
 	initMap(); //uruchom silnik mapy
+
+  //losowanie obiektów / markerów i wrzucanie ich na mapę
 	createOponents(map,oponents);
+  //dodaj sprzet
+  createSprzet(map,sprzety);
+
 	makeMapFullScreen(); //ustaw mapę na pełny ekran
 		
 	
@@ -77,7 +85,11 @@ function initMap() {
     {
       featureType: "poi",
       elementType: "labels.text.fill",
-      stylers: [{ color: "#d59563" }],
+      stylers: [{ color: "#d59563" },{ "visibility": "off" }],
+    },
+    {
+      featureType: "poi",
+      stylers: [{ "visibility": "off" }],
     },
     {
       featureType: "poi.park",
@@ -94,6 +106,17 @@ function initMap() {
       elementType: "geometry",
       stylers: [{ color: "#38414e" }],
     }
+
+//typy elementów poi (point of interest)
+//https://developers.google.com/maps/documentation/places/web-service/supported_types
+//https://developers.google.com/maps/documentation/javascript/style-reference
+
+//wyłączanie elementów   w mapie  featureType: "transit",
+ //elementType: "labels.icon",
+ //stylers: [{ visibility: "off" }],
+
+
+
 
   ],
 	disableDefaultUI: true //wyłączamy domyślny interfejs
@@ -415,9 +438,12 @@ setInterval(function() {
 //odświerz moją pozycję (dodaj marker nowy za każdym razem)
 setInterval(function(){
 
-  refreshMyMarkerPosition();
+  if (go===true){
+    refreshMyMarkerPosition();
+  }
 
-},10000)
+
+},5000)
 
 
 
@@ -580,7 +606,7 @@ var i=0;
       if (go===true)
       {
         nstaskbar.innerHTML="czysto";
-        addEventDiv(); //testowo dodaję event diva ze sliderem
+        addEventDiv(); //testowo dodaję event diva ze sliderem i zatrzymuję go=false
       }
 
 
@@ -613,14 +639,19 @@ function refreshMyMarkerPosition()
           lng: position.coords.longitude,
         };
 
-     //aktualizuje pozycje gracza1
-     player1.setPosition( new google.maps.LatLng(position.coords.latitude,position.coords.longitude) );
 
-    //ustawia mapę na pozycji gracza
-    map.setCenter(pos);  //ustaw mapę na mojej pozycji
+      if (go===true)
+      {
+        //aktualizuje pozycje gracza1
+        player1.setPosition( new google.maps.LatLng(position.coords.latitude,position.coords.longitude) );
 
-     //sprawdza czy w zadanej odleglosci widzimy jakiegos oponenta
-     find_closest_oponent(pos)
+      //ustawia mapę na pozycji gracza
+        map.setCenter(pos);  //ustaw mapę na mojej pozycji
+
+       //sprawdza czy w zadanej odleglosci widzimy jakiegos oponenta
+       find_closest_oponent(pos)
+      }
+
     
       },
       () => {

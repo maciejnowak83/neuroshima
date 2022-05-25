@@ -29,8 +29,8 @@ function resolveOrNot()
    console.log(taskStatus + " go status:" + go);
    
 
-   if (taskStatus===true){
-       setGo(true); }
+   if (taskStatus===true){ //jeżeli potwierdzamy wykonanie zadania, kontynuujemy przygodę
+       setGo(true); }else {setGo(false);}
 
 
 

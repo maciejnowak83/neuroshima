@@ -1,4 +1,6 @@
-let neuroshima_sprzet = [];
+//let neuroshima_sprzet = [];
+  let neuroshima_sprzet = {};
+
 
 const alkohol_sam_1litr = {
     rodzaj: "uzywki",
@@ -8,6 +10,17 @@ const alkohol_sam_1litr = {
 };
 
 
-neuroshima_sprzet.push(alkohol_sam_1litr);
+    neuroshima_sprzet = {
+        alkohol_sam_1_litr : {},
+        
+    }
+
+
+
+
+
+
+
+//neuroshima_sprzet.push(alkohol_sam_1litr);
 
 export {neuroshima_sprzet};
