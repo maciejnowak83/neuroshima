@@ -2,23 +2,31 @@ import { go } from './index.js'
 import { setGo } from './index.js'
 import { neuroshima_sprzet } from './neuroshima_objects.js'
 
-function addEventDiv()
+
+
+function addEventDiv(_nobject) //jako _nobject wrzucamy oponenta lub sprzet i cos z nim robimy
 {
 
+
+    
     const eventNode = document.createElement("label");
           eventNode.classList.add("switch");  //dodajemy klasę switch do elementu
-          eventNode.innerHTML="<input id=\"nobject_22\" type=\"checkbox\"><span class=\"slider\"></span>";
+          eventNode.innerHTML="<br><input id=\"nobject_22\" type=\"checkbox\"><span class=\"slider\"></span>";
 
           document.getElementById("nstaskbar").appendChild(eventNode);
 
-          document.getElementById("nobject_22").addEventListener("click",resolveOrNot,false);
+          //document.getElementById("nobject_22").addEventListener("click",resolveOrNot,false);
+
+          document.getElementById("nobject_22").addEventListener("click",function(){resolveOrNot(_nobject);},false);
+    
+        
 
     setGo(false); //zatrzymujemy ciąg zdarzeń i czekamy na decyzję w zadaniu
     console.log('Uruchomiono zadanie, zatrzymuję i czekam na decyzję...');
 
 }
 
-function resolveOrNot()
+function resolveOrNot(_nobject)
 { //po uruchomieniu zadania podejmujemy decyzję
 
    var taskStatus =  document.getElementById("nobject_22").checked; //pobieramy status zadania (jeżeli kliniemy checked idziemy dalej);
@@ -30,6 +38,7 @@ function resolveOrNot()
    
 
    if (taskStatus===true){ //jeżeli potwierdzamy wykonanie zadania, kontynuujemy przygodę
+       _nobject.pokonano=true;
        setGo(true); }else {setGo(false);}
 
 

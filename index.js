@@ -51,14 +51,18 @@ function runNeuroshima() {
 	
 	initMap(); //uruchom silnik mapy
 
+
   //losowanie obiektów / markerów i wrzucanie ich na mapę
-	createOponents(map,oponents,30,stara_jamka); //losujemy x oponentów
+	createOponents(map,oponents,60,stara_jamka); //losujemy x oponentów
+  createOponents(map,oponents,60,nysa); //losujemy x oponentów
   //dodaj sprzet
   createSprzet(map,sprzety,30,stara_jamka); //losujemy x sprzetu
+  createSprzet(map,sprzety,15,nysa); //losujemy x sprzetu
 
 	makeMapFullScreen(); //ustaw mapę na pełny ekran
 		
-	
+	pokazMojaPozycje();
+
 }
 
 function setGo(state)
@@ -255,7 +259,7 @@ function initMap() {
         //  infoWindow.open(map);
 		
 		
-        // map.setCenter(pos);  //ustaw mapę na mojej pozycji
+        map.setCenter(pos);  //ustaw mapę na mojej pozycji
 		 
 		 
 		 //i dodaj marker
@@ -302,6 +306,44 @@ function initMap() {
     
    
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+function pokazMojaPozycje()
+	{
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(
+            (position) => {
+              const pos = {
+                lat: position.coords.latitude,
+                lng: position.coords.longitude,
+              };
+            map.setCenter(pos);  //ustaw mapę na mojej pozycji
+          
+            },
+            () => {
+              handleLocationError(true, infoWindow, map.getCenter());
+            }
+          );
+        } else {
+          // Browser doesn't support Geolocation
+          handleLocationError(false, infoWindow, map.getCenter());
+
+        }
+  }
+
+
+
 
 
 
@@ -586,6 +628,9 @@ function find_closest_oponent(myLatLng) {
 var i=0;
   for (i = 0; i < oponents.length; i++) {
 
+
+    if (oponents[i].pokonano===true) {return;} //jeżeli oponent jest pokany pomijamy go
+
     var d = google.maps.geometry.spherical.computeDistanceBetween(oponents[i].marker.position,myLatLng); //oblicza odleglosc w metrach pomiędzy player1 a oponentem
 
     distances[i] = d;
@@ -594,15 +639,15 @@ var i=0;
     }
     
 
-    if (distances[closest] <= 200) { //czy obiekt jest w odleglosci 50 metrów lub mniejszej ?
+    if (distances[closest] <= 50) { //czy obiekt jest w odleglosci 50 metrów lub mniejszej ?
 
      nstaskbar.innerHTML="napotkałem: " + oponents[closest].nazwa + " w odległości" + distances[closest];
 
      //uwidocznij napotkanego oponenta (domyślnie oponenci są ukryci)
      oponents[closest].marker.setVisible(true);
-
+     
      //dodaj event div ze sliderem i czekaj na akcję (tutaj się zatrzymujemy. Musimy pokonać oponenta lub wykonać akcje, które pozwolą nam iść dalej)
-     addEventDiv();
+     addEventDiv(oponents[closest]);
 
 
      // alert('Closest marker is: ' + oponents[closest].getTitle() + ' distance: ' + distances[closest]);
@@ -652,7 +697,7 @@ function refreshMyMarkerPosition()
         player1.setPosition( new google.maps.LatLng(position.coords.latitude,position.coords.longitude) );
 
       //ustawia mapę na pozycji gracza
-        map.setCenter(pos);  //ustaw mapę na mojej pozycji
+       // map.setCenter(pos);  //ustaw mapę na mojej pozycji
 
        //sprawdza czy w zadanej odleglosci widzimy jakiegos oponenta
        find_closest_oponent(pos)
@@ -725,14 +770,16 @@ function CenterControl(controlDiv, map) {
 		 
 		 
 		 //i dodaj marker
+   /*
 		  const tutaj_jestem = new google.maps.Marker({
 				position: pos,
 				map: map,
 				title: "Hej tutaj jestem",
 				label: "Hej tutaj jestem"
 	    });
-  
+  */
 		  
+
 		  
 		  
         },

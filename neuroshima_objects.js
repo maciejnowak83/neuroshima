@@ -11,10 +11,10 @@ let neuroshima_sprzet = {
   
 
 let neuroshima_oponents = {
-    plujka : {rodzaj: 'sprzet_molocha',nazwa: 'plujka',atak: 6, marker: {} },
-    mobsprzet : {rodzaj: 'sprzet_molocha',nazwa: 'mob1',atak: 8, marker: {} },
-    technomorwa : {rodzaj: 'dziki_insekt',nazwa: 'tehchomorwa',atak: 4, marker: {} },
-    maszynoczlowiek: {rodzaj: 'sprzet_molocha',nazwa: 'maszynoczlowiek',atak: 6, marker: {}}
+    plujka : {rodzaj: 'sprzet_molocha',nazwa: 'plujka',atak: 6,pokonano:false, marker: {} },
+    mobsprzet : {rodzaj: 'sprzet_molocha',nazwa: 'mob1',atak: 8,pokonano:false, marker: {} },
+    technomorwa : {rodzaj: 'dziki_insekt',nazwa: 'tehchomorwa',atak: 4,pokonano:false, marker: {} },
+    maszynoczlowiek: {rodzaj: 'sprzet_molocha',nazwa: 'maszynoczlowiek',atak: 6,pokonano:false, marker: {}}
 };
 
 

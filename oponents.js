@@ -50,8 +50,8 @@ function createOponents(map,oponents,oponentsNum=5,originPoint) {
         
 		  oponent_ =  new Object();
           //oponent_ = neuroshima_oponents.plujka;
-		  oponent_ = neuroshima_oponents[keys[keys.length * Math.random() << 0]];
-          oponent_.marker = oponentMarker;
+		  oponent_ = neuroshima_oponents[keys[keys.length * Math.random() << 0]]; //losujemy rodzaj przeciwnika
+          oponent_.marker = oponentMarker; //dodajemy marker przeciwnika na mapę
           oponent_.marker.title = oponent_.nazwa;
           oponent_.marker.label = oponent_.nazwa;
 		   

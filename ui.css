@@ -2,8 +2,9 @@
  .switch {
     position: relative;
     display: inline-block;
-    width: 60px;
-    height: 34px;
+    float:left;
+    width: 70px;
+    height: 44px;
   }
   
   /* Hide default HTML checkbox */
