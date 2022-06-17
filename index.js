@@ -10,11 +10,19 @@ let player1;
 
 let nstaskbar;
 
-let oponents = [];
+let oponents = []; //przeciwnicy
 
 let sprzety = []; //ksiazka strona 136
 
 let go = true; //status decyzji, jezeli na false czekamy na decyzje, jezeli true, gra się toczy
+
+
+  // The location of nysa
+  const nysa = { lat: 50.4823, lng: 17.3296 };
+  // The location of stara jamka
+  const stara_jamka = {lat:50.4783, lng: 17.6546 };
+  // The location of stara jamka
+  const znajdz_mnie = {lat:50.4824, lng: 17.3298};
 
 
 import {createOponents} from './oponents.js';
@@ -44,9 +52,9 @@ function runNeuroshima() {
 	initMap(); //uruchom silnik mapy
 
   //losowanie obiektów / markerów i wrzucanie ich na mapę
-	createOponents(map,oponents);
+	createOponents(map,oponents,30,stara_jamka); //losujemy x oponentów
   //dodaj sprzet
-  createSprzet(map,sprzety);
+  createSprzet(map,sprzety,30,stara_jamka); //losujemy x sprzetu
 
 	makeMapFullScreen(); //ustaw mapę na pełny ekran
 		
@@ -62,12 +70,7 @@ function setGo(state)
 
 // Initialize and add the map
 function initMap() {
-  // The location of nysa
-  const nysa = { lat: 50.4823, lng: 17.3296 };
-  // The location of stara jamka
-  const stara_jamka = {lat:50.4783, lng: 17.6546 };
-  // The location of stara jamka
-  const znajdz_mnie = {lat:50.4824, lng: 17.3298};
+
   
   // The map, centered at nysa
   //https://developers.google.com/maps/documentation/javascript/examples/style-array ostylowanie mapy (np nigt mode)
@@ -583,7 +586,7 @@ function find_closest_oponent(myLatLng) {
 var i=0;
   for (i = 0; i < oponents.length; i++) {
 
-    var d = google.maps.geometry.spherical.computeDistanceBetween(oponents[i].position,myLatLng); //oblicza odleglosc w metrach pomiędzy player1 a oponentem
+    var d = google.maps.geometry.spherical.computeDistanceBetween(oponents[i].marker.position,myLatLng); //oblicza odleglosc w metrach pomiędzy player1 a oponentem
 
     distances[i] = d;
     if (closest == -1 || d < distances[closest]) {
@@ -591,12 +594,15 @@ var i=0;
     }
     
 
-    if (distances[closest] <= 50) { //czy obiekt jest w odleglosci 50 metrów lub mniejszej ?
+    if (distances[closest] <= 200) { //czy obiekt jest w odleglosci 50 metrów lub mniejszej ?
 
-     nstaskbar.innerHTML="napotkałem: " + oponents[closest].getTitle() + " w odległości" + distances[closest];
+     nstaskbar.innerHTML="napotkałem: " + oponents[closest].nazwa + " w odległości" + distances[closest];
 
-     //dodaj event div ze sliderem
+     //uwidocznij napotkanego oponenta (domyślnie oponenci są ukryci)
+     oponents[closest].marker.setVisible(true);
 
+     //dodaj event div ze sliderem i czekaj na akcję (tutaj się zatrzymujemy. Musimy pokonać oponenta lub wykonać akcje, które pozwolą nam iść dalej)
+     addEventDiv();
 
 
      // alert('Closest marker is: ' + oponents[closest].getTitle() + ' distance: ' + distances[closest]);
@@ -606,7 +612,7 @@ var i=0;
       if (go===true)
       {
         nstaskbar.innerHTML="czysto";
-        addEventDiv(); //testowo dodaję event diva ze sliderem i zatrzymuję go=false
+        //addEventDiv(); //testowo dodaję event diva ze sliderem i zatrzymuję go=false
       }
 
 

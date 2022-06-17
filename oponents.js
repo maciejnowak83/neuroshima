@@ -1,7 +1,8 @@
 //let oponents = []; //obiekty losowo wygenerowane jako przeciwnicy i przeszkody w neuroshimie
+import { neuroshima_oponents } from './neuroshima_objects.js'
 
 
-function createOponents(map,oponents) {
+function createOponents(map,oponents,oponentsNum=5,originPoint) {
 	
 	
   const image = {
@@ -20,23 +21,48 @@ function createOponents(map,oponents) {
 	
 	
 	//losuj markery oponent�w (ich pozycj�)
-	for (let i = 0; i < 5; i++) {
+	for (let i = 0; i < oponentsNum; i++) {
 		
-		  var oponent_position = { lat: 50.4823+(Math.random()/100), lng: 17.3296+(Math.random()/100) }; //wokół nysy
-          var oponent;	
+		  var oponentMarker; 
+		  var oponent_;
+
+		  var one_or_minus_one = Math.round(Math.random()) * 2 - 1;
+
+		  //var oponent_position = { lat: 50.4823  +  one_or_minus_one*(Math.random()/200), lng: 17.3296+ one_or_minus_one * (Math.random()/200) }; //wokół nysy
+		  var oponent_position = { lat: originPoint.lat  +  one_or_minus_one*(Math.random()/200), lng: originPoint.lng+ one_or_minus_one * (Math.random()/200) }; //wokół nysy
+        
 		  //var nysa = { lat: 50.4823+(Math.random()/100), lng: 17.3296+(Math.random()/100) };
 		  
-		  oponent = new google.maps.Marker({
-				position: oponent_position,
-				map: map,
-				icon: image,
-				title: "Oponent"+i,
-				label: "Oponent"+i, 
-				visible: true
+		  oponentMarker = new google.maps.Marker({
+			position: oponent_position,
+			map: map,
+			icon: image,
+			title: "Oponent"+i,
+			label: "Oponent"+i, 
+			visible: false //domyślnie oponenci są niewidoczni, dopiero kiedy się do niego zbliżę i go zobaczę, pokazuje się
 
-			  });
+		  });
+
+
+
+
+		  var keys = Object.keys(neuroshima_oponents);
+        
+		  oponent_ =  new Object();
+          //oponent_ = neuroshima_oponents.plujka;
+		  oponent_ = neuroshima_oponents[keys[keys.length * Math.random() << 0]];
+          oponent_.marker = oponentMarker;
+          oponent_.marker.title = oponent_.nazwa;
+          oponent_.marker.label = oponent_.nazwa;
+		   
+          /*
+		  oponent_ = new neuroshima_oponents.plujka(
+			 { marker : oponentMarker}
+		  );
+		   */
 			  
-			  oponents.push(oponent); //dodajemy oponent�w do zbioru  
+		  //oponents.push(oponentMarker); //dodajemy oponent�w do zbioru  
+		  oponents.push(oponent_);
 			  
 	
 	} 

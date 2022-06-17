@@ -1,7 +1,7 @@
 //let oponents = []; //obiekty losowo wygenerowane jako przeciwnicy i przeszkody w neuroshimie
+import { neuroshima_sprzet } from './neuroshima_objects.js'
 
-
-function createSprzet(map,sprzety) {
+function createSprzet(map,sprzety,ileSprzetu=10,originPoint) {
 	
 	
   const image = {
@@ -21,14 +21,20 @@ function createSprzet(map,sprzety) {
 	
 	
 	
-	//losuj markery oponent�w (ich pozycj�)
-	for (let i = 0; i < 10; i++) {
+	//losuj sprzet i rozlokuj je na mapie
+	for (let i = 0; i < ileSprzetu; i++) {
 		
-		  var sprzet_position = { lat: 50.4823+(Math.random()/100), lng: 17.3296+(Math.random()/100) }; //wokół nysy
-          var sprzet;	
+
+		 var one_or_minus_one = Math.round(Math.random()) * 2 - 1;
+
+		  //var sprzet_position = { lat: 50.4823 + one_or_minus_one*(Math.random()/200), lng: 17.3296 + one_or_minus_one*(Math.random()/200) }; //wokół nysy
+		  var sprzet_position = { lat: originPoint.lat + one_or_minus_one*(Math.random()/200), lng: originPoint.lng + one_or_minus_one*(Math.random()/200) }; 
+          var sprzetMarker;	
+		  var sprzet_;
+
 		  //var nysa = { lat: 50.4823+(Math.random()/100), lng: 17.3296+(Math.random()/100) };
 		  
-		  sprzet = new google.maps.Marker({
+		  sprzetMarker = new google.maps.Marker({
 				position: sprzet_position,
 				map: map,
 				icon: image,
@@ -37,8 +43,20 @@ function createSprzet(map,sprzety) {
 				visible: true
 
 			  });
+
+
+		  var keys = Object.keys(neuroshima_sprzet);
+
+		  sprzet_ =  new Object();
+
+		  //sprzet_ = neuroshima_sprzet.alkohol_mar_litr;
+		  sprzet_ = neuroshima_sprzet[keys[keys.length * Math.random() << 0]];
+
+		  sprzet_.marker = sprzetMarker;
+		  sprzet_.marker.title = sprzet_.nazwa;
+          sprzet_.marker.label = sprzet_.nazwa;
 			  
-			  sprzety.push(sprzet); //dodajemy oponent�w do zbioru  
+		  sprzety.push(sprzet_); //dodajemy oponent�w do zbioru  
 			  
 	
 	} 
